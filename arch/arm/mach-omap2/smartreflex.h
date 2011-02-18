@@ -303,7 +303,7 @@ static inline int omap_pmic_voltage_cmds(u8 srid, u8 target_vsel)
 	return -EINVAL;
 }
 #endif
-int sr_recalibrate(struct omap_opp *opp, u32 target_opp, u32 current_opp)
+static inline int sr_recalibrate(struct omap_opp *opp, u32 target_opp, u32 current_opp)
 {
 	return -EINVAL;
 }
