@@ -55,7 +55,6 @@ static struct twl_mmc_controller {
 static int twl_mmc_card_detect(int irq)
 {
 	unsigned i;
-    printk("********IN twl_mmc_card_detect************\n");
 	for (i = 0; i < ARRAY_SIZE(hsmmc); i++) {
 		struct omap_mmc_platform_data *mmc;
 
@@ -65,22 +64,18 @@ static int twl_mmc_card_detect(int irq)
 		if (irq != mmc->slots[0].card_detect_irq)
 			continue;
 
-		/* NOTE: assumes card detect signal is active-low */
-		return !gpio_get_value_cansleep(mmc->slots[0].switch_pin);
-		
-#ifdef CCONFIG_MACH_ENCORE
-        printk("***********IN twl_mmc_card_detect AND I'M CONFIG_MACH_ENCORE\n");
+#ifdef CONFIG_MACH_ENCORE
 		/* NOTE: assumes card detect signal is active-low */
 		 /*for EVT2 and later, card is high when present*/
-		if(i==0) {
-		    if(is_encore_board_evt2()) {
-			return gpio_get_value_cansleep(mmc->slots[0].switch_pin);
-		    } else {
-			return !gpio_get_value_cansleep(mmc->slots[0].switch_pin);
-		    }       
+		if (i==0) {
+			if(is_encore_board_evt2()) {
+				return gpio_get_value_cansleep(mmc->slots[0].switch_pin);
+			} else {
+				return !gpio_get_value_cansleep(mmc->slots[0].switch_pin);
+			}       
 		} else {
-		      return !gpio_get_value_cansleep(mmc->slots[0].switch_pin);
-        }
+			return !gpio_get_value_cansleep(mmc->slots[0].switch_pin);
+       		}
 #endif /* CONFIG_MACH_ENCORE */
 	}
 	return -ENOSYS;
