@@ -144,9 +144,6 @@ struct omap34xx_bridge_suspend_data {
 
 static struct omap34xx_bridge_suspend_data bridge_suspend_data;
 
-static void bridge_create_sysfs(void);
-static void bridge_destroy_sysfs(void);
-
 static int omap34xxbridge_suspend_lockout(
 		struct omap34xx_bridge_suspend_data *s, struct file *f)
 {
@@ -159,6 +156,9 @@ static int omap34xxbridge_suspend_lockout(
 }
 
 #endif
+
+static void bridge_create_sysfs(void);
+static void bridge_destroy_sysfs(void);
 
 #ifdef DEBUG
 module_param(GT_str, charp, 0);
