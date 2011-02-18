@@ -947,7 +947,9 @@ static int omap3_core_dpll_m2_set_rate(struct clk *clk, unsigned long rate)
 		 sdrc_cs1->actim_ctrlb, sdrc_cs1->mr);
 
 	/* Here irq already disabled */
+#ifdef CONFIG_PM
 	lock_scratchpad_sem();
+#endif
 
 	if (sdrc_cs1)
 		omap3_configure_core_dpll(
@@ -965,8 +967,8 @@ static int omap3_core_dpll_m2_set_rate(struct clk *clk, unsigned long rate)
 
 #ifdef CONFIG_PM
 	omap3_save_scratchpad_contents();
-#endif
 	unlock_scratchpad_sem();
+#endif
 
 	return 0;
 }
