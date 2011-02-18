@@ -522,26 +522,6 @@ static irqreturn_t omap_uart_interrupt(int irq, void *dev_id)
 
 static u32 sleep_timeout = DEFAULT_TIMEOUT;
 
-static void omap_uart_rtspad_init(struct omap_uart_state *uart)
-{
-	if (!cpu_is_omap34xx())
-		return;
-	switch(uart->num) {
-	case 0:
-		uart->rts_padconf = 0x17e;
-		break;
-	case 1:
-		uart->rts_padconf = 0x176;
-		break;
-	case 2:
-/*		uart->rts_padconf = 0x19c; */
-		break;
-	default:
-		uart->rts_padconf = 0;
-		break;
-	}
-}
-
 static void omap_uart_idle_init(struct omap_uart_state *uart)
 {
 	u32 v;
@@ -684,6 +664,29 @@ static struct kobj_attribute sleep_timeout_attr =
 static inline void omap_uart_idle_init(struct omap_uart_state *uart) {}
 #endif /* CONFIG_PM */
 
+
+static void omap_uart_rtspad_init(struct omap_uart_state *uart)
+{
+	if (!cpu_is_omap34xx())
+		return;
+	switch(uart->num) {
+	case 0:
+		uart->rts_padconf = 0x17e;
+		break;
+	case 1:
+		uart->rts_padconf = 0x176;
+		break;
+	case 2:
+/*		uart->rts_padconf = 0x19c; */
+		break;
+	default:
+		uart->rts_padconf = 0;
+		break;
+	}
+}
+
+
+
 static int fifo_idleblk_get(void *data, u64 *val)
 {
 	*val = fifo_idleblks;
@@ -781,6 +784,7 @@ static int __init omap_hs_init(void)
 		printk(KERN_ERR "Error adding uart devices (%d)\n", ret);
 		return ret;
 	}
+#ifdef CONFIG_PM
 	ret = sysfs_create_file(&uart1_device.dev.kobj,
 				&sleep_timeout_attr.attr);
 	if (ret) {
@@ -789,6 +793,7 @@ static int __init omap_hs_init(void)
 			ret);
 		return ret;
 	}
+#endif
 	return ret;
 }
 arch_initcall(omap_hs_init);
