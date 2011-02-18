@@ -13,7 +13,13 @@
 
 #include <plat/powerdomain.h>
 
+#ifdef CONFIG_PM
 extern u32 enable_off_mode;
+extern int set_pwrdm_state(struct powerdomain *pwrdm, u32 state);
+#else
+#define enable_off_mode (0)
+#define set_pwrdm_state(a, b) ({ 1;})
+#endif
 extern u32 sleep_while_idle;
 extern u32 voltage_off_while_idle;
 extern unsigned int wakeup_timer_nseconds;
@@ -23,7 +29,6 @@ extern void *omap3_secure_ram_storage;
 extern void omap3_pm_off_mode_enable(int);
 extern void omap_sram_idle(void);
 extern int omap3_can_sleep(void);
-extern int set_pwrdm_state(struct powerdomain *pwrdm, u32 state);
 extern int omap3_idle_init(void);
 extern void vfp_pm_save_context(void);
 
