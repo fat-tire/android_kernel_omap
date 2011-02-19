@@ -557,7 +557,7 @@ config USB_GADGET_DUALSPEED
 choice
 	tristate "USB Gadget Drivers"
 	depends on USB_GADGET && USB_GADGET_SELECTED
-	default USB_ETH
+#	default USB_ETH
 	help
 	  A Linux "Gadget Driver" talks to the USB Peripheral Controller
 	  driver through the abstract "gadget" API.  Some other operating
