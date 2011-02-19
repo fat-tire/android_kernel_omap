@@ -1094,7 +1094,7 @@ unsigned int dac3100_read(struct snd_soc_codec *codec, unsigned int reg)
 	i2c_master_recv(codec->control_data, &value, 1); */
 
 	codec->hw_write (codec->control_data, (char *)&reg, 1);
-	value = codec->hw_read  (codec->control_data, 1);
+	value = codec->hw_read  (codec/*->control_data*/, 1);
 
         //DBG ("Reg %X Val %x Cache %x\r\n", reg, value, cache_value);
 	return value;
