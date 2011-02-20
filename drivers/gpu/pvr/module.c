@@ -239,7 +239,7 @@ static IMG_INT __devinit PVRSRVDriverProbe(LDM_DEV *pDevice, const struct pci_de
 		return -EINVAL;
 	}
 #endif	
-	
+
 	if (SysAcquireData(&psSysData) != PVRSRV_OK)
 	{
 		gpsPVRLDMDev = pDevice;
@@ -514,11 +514,11 @@ static IMG_INT __init PVRCore_Init(IMG_VOID)
 #endif
 {
 	IMG_INT error;
-#if !defined(PVR_LDM_MODULE)
+//#if !defined(PVR_LDM_MODULE)
 	PVRSRV_ERROR eError;
-#else
+//#else
 	struct device *psDev;
-#endif
+//#endif
 
 #if !defined(SUPPORT_DRI_DRM)
 	
@@ -585,8 +585,6 @@ static IMG_INT __init PVRCore_Init(IMG_VOID)
 
 		goto init_failed;
 	}
-#endif 
-
 #else 
 	
 	if ((eError = SysInitialise()) != PVRSRV_OK)
@@ -601,6 +599,7 @@ static IMG_INT __init PVRCore_Init(IMG_VOID)
 #endif
 		goto init_failed;
 	}
+#endif 
 #endif 
 
 #if !defined(SUPPORT_DRI_DRM)
