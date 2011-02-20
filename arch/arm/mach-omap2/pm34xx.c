@@ -396,7 +396,8 @@ void omap_sram_idle(void)
 	u32 sdrc_pwr = 0;
 	int per_state_modified = 0;
 
-	if (!_omap_sram_idle)
+/* XXX: Superhack, we totally disable all sorts of cpu sleeping before sleep errata code is incorporated */
+//	if (!_omap_sram_idle)
 		return;
 
 	pwrdm_clear_all_prev_pwrst(mpu_pwrdm);
