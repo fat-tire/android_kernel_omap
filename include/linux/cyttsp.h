@@ -135,7 +135,7 @@
 /* define if gesture signaling is used
  * and which gesture groups to use
  */
-#define CY_USE_GEST
+//#define CY_USE_GEST
 // #define CY_USE_GEST_GRP1
 #define CY_USE_GEST_GRP2
 #define CY_USE_GEST_GRP3
