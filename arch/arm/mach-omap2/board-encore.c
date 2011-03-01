@@ -439,15 +439,15 @@ static struct platform_device boxer_vout_device = {
 	.num_resources	= ARRAY_SIZE(boxer_vout_resource),
 	.resource	= &boxer_vout_resource[0],
 	.id		= -1,
-/*#ifdef CONFIG_PM
+#ifdef CONFIG_PM
 	.dev		= {
-		.platform_data = &boxer_vout_data,
+//		.platform_data = &boxer_vout_data,
 	}
-#else*/
+#else
 	.dev		= {
 		.platform_data = NULL,
 	}
-//#endif
+#endif
 };
 /* This is just code left here to leverage on this for Maxim battery charger*/
 #ifdef CONFIG_REGULATOR_MAXIM_CHARGER
@@ -948,12 +948,12 @@ static struct cyttsp_platform_data cyttsp_platform_data = {
 	.maxy = 1024,
 	.flags = 0,
 	.gen = CY_GEN3,
-	.use_st = CY_USE_ST,
-	.use_mt = CY_USE_MT,
-	.use_hndshk = CY_SEND_HNDSHK,
-	.use_trk_id = CY_USE_TRACKING_ID,
-	.use_sleep = CY_USE_SLEEP,
-	.use_gestures = CY_USE_GESTURES,
+	.use_st = 1 /*CY_USE_ST*/,
+	.use_mt = 1 /*CY_USE_MT*/,
+	.use_hndshk = 0 /*CY_SEND_HNDSHK*/,
+	.use_trk_id = 0 /*CY_USE_TRACKING_ID*/,
+	.use_sleep = 1 /*CY_USE_SLEEP*/,
+	.use_gestures = 1 /*CY_USE_GESTURES*/,
 	/* activate up to 4 groups
 	 * and set active distance
 	 */
@@ -1353,8 +1353,8 @@ static struct platform_device android_usb_device = {
 
 static int __init omap_i2c_init(void)
 {
-    printk("***********IN omap_i2c_init***********\n");
     int i2c1_devices;
+    printk("***********IN omap_i2c_init***********\n");
 
 /* Disable OMAP 3630 internal pull-ups for I2Ci */
 	if (cpu_is_omap3630()) {
@@ -1414,6 +1414,7 @@ fail:
 
 static void __init omap_boxer_init(void)
 {
+printk("boxer1\n");
 	/*we need to have this enable function here to light up the BL*/
 	boxer_panel_enable_lcd(&boxer_lcd_device);
 	omap_i2c_init();
@@ -1462,6 +1463,8 @@ static void __init omap_boxer_init(void)
 	platform_device_register(&android_usb_device);
 #endif
         BUG_ON(!cpu_is_omap3630());
+
+printk("boxer2\n");
 }
 
 static struct map_desc boxer_io_desc[] __initdata = {
